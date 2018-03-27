@@ -13,6 +13,7 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from os import getenv
+import models
 HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
 HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
 HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
@@ -37,7 +38,7 @@ class DBStorage:
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
                                       .format(HBNB_MYSQL_USER, HBNB_MYSQL_PWD,
                                               HBNB_MYSQL_HOST, HBNB_MYSQL_DB),
-                                      pool_pre_ping=True, echo=True)
+                                      pool_pre_ping=True, echo=False)
         if HBNB_ENV == 'test':
             Base.metadata.drop_all(self.__engine)
 
@@ -46,14 +47,18 @@ class DBStorage:
         Method that creates a query and prints a dictionary of cls
         '''
         obj_dict = {}
+        print('db_all')
         if cls is not None:
-            for obj in session.query(cls):
+            cls_obj = models.classes[cls]
+            print('print class')
+            for obj in self.__session.query(cls_obj):
                 key = cls + '.' + obj.id
                 obj_dict[key] = obj
         else:
-            for cls_name in classes:
+            print('all tables')
+            for cls_name in models.classes.values():
                 try:
-                    for obj in session.query(cls_name):
+                    for obj in self.__session.query(cls_name):
                         key = cls_name + '.' + obj.id
                         obj_dict[key] = obj
                 except:

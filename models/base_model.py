@@ -68,7 +68,7 @@ class BaseModel:
         cp_dct['updated_at'] = self.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
         cp_dct['created_at'] = self.created_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
         try:
-            cp_dct.pop("_sa_instance_state")
+            del cp_dct["_sa_instance_state"]
         except KeyError:
             pass
         return (cp_dct)
