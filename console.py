@@ -6,6 +6,7 @@ import cmd
 import json
 import shlex
 from models.engine.file_storage import FileStorage
+from models.engine.db_storage import DBStorage
 from models.base_model import BaseModel
 from models.user import User
 from models.place import Place
@@ -62,7 +63,7 @@ class HBNBCommand(cmd.Cmd):
                     value = int(value)
                 new_dict[args_list[i][0]] = value
             elif value.startswith('"') and value.endswith('"'):
-                new_dict[args_list[i][0]] = value
+                new_dict[args_list[i][0]] = value[1:-1]
             else:
                 pass
 
@@ -73,8 +74,9 @@ class HBNBCommand(cmd.Cmd):
 
             new_instance.save()
             print(new_instance.id)
-        except:
-            print("** class doesn't exist **")
+        except Exception as e:
+            print(e)
+#            print("** class doesn't exist **")
 
     def do_show(self, args):
         '''
