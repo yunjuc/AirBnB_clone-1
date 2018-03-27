@@ -13,22 +13,21 @@ class State(BaseModel, Base):
     '''
         Implementation for the State.
     '''
-    name = Column(String(128), nullable=False)
     __tablename__ = 'states'
+    name = Column(String(128), nullable=False)
 
     if getenv('HBNB_TYPE_STORAGE') == 'db':
-        cities = relationship("City", back_populates='state',
-                              cascade='all, delete')
+        cities = relationship("City", backref='state',
+                              cascade='delete')
     else:
         @property
-        def cities (self):
+        def cities(self):
             '''
             Getter for cities
             '''
             all_cities = models.storage.all(City)
             cities = []
-            print(all_cities)
             for key, obj in all_cities.items():
-                if key == state_id:
+                if obj.state_id == self.id:
                     cities.append(obj)
             return cities
