@@ -13,7 +13,6 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from os import getenv
-import models
 HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
 HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
 HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
@@ -47,22 +46,16 @@ class DBStorage:
         Method that creates a query and prints a dictionary of cls
         '''
         obj_dict = {}
-        print('db_all')
-        if cls is not None:
-            cls_obj = models.classes[cls]
-            print('print class')
-            for obj in self.__session.query(cls_obj):
-                key = cls + '.' + obj.id
-                obj_dict[key] = obj
-        else:
-            print('all tables')
-            for cls_name in models.classes.values():
-                try:
-                    for obj in self.__session.query(cls_name):
-                        key = cls_name + '.' + obj.id
-                        obj_dict[key] = obj
-                except:
-                    pass
+        cls_list = [User, Place, State, City, Amenity, Review]
+        for cls in cls_list:
+            print(cls)
+            try:
+                objs =  self.__session.query(cls).all()
+                for obj in objs:
+                    key = cls + '.' + obj.id
+                    obj_dict[key] = obj
+            except:
+                continue
         return obj_dict
 
     def new(self, obj):

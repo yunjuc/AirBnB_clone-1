@@ -136,7 +136,6 @@ class HBNBCommand(cmd.Cmd):
         '''
         obj_list = []
         objects = models.storage.all()
-        print(objects)
         try:
             if len(args) != 0:
                 eval(args)
