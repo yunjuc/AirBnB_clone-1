@@ -47,13 +47,14 @@ class DBStorage:
         if cls is not None:
             for obj in session.query(cls):
                 print(obj)
+
 #                print("[{}] ({}) {}".format(cls, obj.id, )
 
     def new(self, obj):
         '''
         Add a new object to database
         '''
-        self.__session.add(self)
+        self.__session.add(obj)
 
     def save(self):
         '''
@@ -75,4 +76,4 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(bind=self.__engine,
                                        expire_on_commit=False)
-        self.__sessioin = scoped_session(session_factory)
+        self.__session = scoped_session(session_factory)
