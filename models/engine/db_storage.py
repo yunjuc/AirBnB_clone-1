@@ -47,7 +47,7 @@ class DBStorage:
         '''
         import models
         obj_dict = {}
-        if cls == None:
+        if cls is None:
             for things in models.classes.values():
                 try:
                     output = self.__session.query(things).all()
@@ -62,7 +62,6 @@ class DBStorage:
                 key = stuff.__class__.__name__ + '.' + stuff.id
                 obj_dict[key] = stuff
         return obj_dict
-
 
     def new(self, obj):
         '''
