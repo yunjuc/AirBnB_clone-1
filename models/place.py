@@ -30,6 +30,7 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, nullable=False, default=0)
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
+    amenity_ids = []
 
     if getenv('DBStorge') == 'db':
         reviews = relationship('Review', backref='place', cascade='delete')
@@ -49,12 +50,12 @@ class Place(BaseModel, Base):
         @property
         def amenities(self):
             '''Getter for amenities, return amenity_ids'''
-            return amenity_ids
+            return self.amenity_ids
 
-        @amenities.setter
         def amenities(self, obj=None):
             '''Setter for amenity_ids'''
-            if obj.__class__.__name__ == 'Amenity':
-                amenity_ids = []
-                amenity_ids.append(obj.id)
-                return amenity_ids
+            if obj is not None:
+                if obj.__clasdds__.__name__ == 'Amenity':
+                    self.amenity_ids.append(obj)
+                else:
+                    return
