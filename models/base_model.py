@@ -3,7 +3,7 @@
     This module defines the BaseModel class
 '''
 import uuid
-from datetime import datetime
+import datetime
 import models
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
@@ -17,8 +17,8 @@ class BaseModel:
         Base class for other classes to be used for the duration.
     '''
     id = Column(String(60), primary_key=True, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
-    updated_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow(), nullable=False)
+    updated_at = Column(DateTime, default=datetime.datetime.utcnow(), nullable=False)
 
     def __init__(self, *args, **kwargs):
         '''
@@ -29,10 +29,15 @@ class BaseModel:
             self.created_at = datetime.utcnow()
             self.updated_at = datetime.utcnow()
         else:
-            kwargs["created_at"] = datetime.strptime(kwargs["created_at"],
-                                                     "%Y-%m-%dT%H:%M:%S.%f")
-            kwargs["updated_at"] = datetime.strptime(kwargs["updated_at"],
-                                                     "%Y-%m-%dT%H:%M:%S.%f")
+            try:
+                kwargs["created_at"] = datetime.datetime\
+                    .strptime(kwargs["created_at"], "%Y-%m-%dT%H:%M:%S.%f")
+                kwargs["updated_at"] = datetime.datetime\
+                    .strptime(kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
+            except:
+                self.id = str(uuid.uuid4())
+                self.created_at = datetime.datetime.utcnow()
+                self.updated_at = datetime.datetime.utcnow()
             for key, val in kwargs.items():
                 if "__class__" not in key:
                     setattr(self, key, val)
@@ -55,7 +60,7 @@ class BaseModel:
         '''
             Update the updated_at attribute with new.
         '''
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.datetime.now()
         models.storage.new(self)
         models.storage.save()
 
@@ -65,10 +70,12 @@ class BaseModel:
         '''
         cp_dct = dict(self.__dict__)
         cp_dct['__class__'] = self.__class__.__name__
-        cp_dct['updated_at'] = self.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
-        cp_dct['created_at'] = self.created_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
-        if '_sa_instance_state' in cp_dct:
-            del cp_dct['_sa_instance_state']
+        cp_dct['updated_at'] = self.updated_at.isoformat()
+        cp_dct['created_at'] = self.created_at.isoformat()
+        try:
+            cp_dct.pop("_sa_instance_state")
+        except KeyError:
+            pass
         return (cp_dct)
 
     def delete(self):
