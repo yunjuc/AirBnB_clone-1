@@ -37,7 +37,7 @@ class DBStorage:
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
                                       .format(HBNB_MYSQL_USER, HBNB_MYSQL_PWD,
                                               HBNB_MYSQL_HOST, HBNB_MYSQL_DB),
-                                      pool_pre_ping=True, echo=False)
+                                      pool_pre_ping=True)
         if HBNB_ENV == 'test':
             Base.metadata.drop_all(self.__engine)
 
@@ -45,18 +45,24 @@ class DBStorage:
         '''
         Method that creates a query and prints a dictionary of cls
         '''
+        import models
         obj_dict = {}
-        cls_list = [User, Place, State, City, Amenity, Review]
-        for cls in cls_list:
-            print(cls)
-            try:
-                objs =  self.__session.query(cls).all()
-                for obj in objs:
-                    key = cls + '.' + obj.id
-                    obj_dict[key] = obj
-            except:
-                continue
+        if cls == None:
+            for things in models.classes.values():
+                try:
+                    output = self.__session.query(things).all()
+                    for stuff in output:
+                        key = stuff.__class__.__name__ + '.' + stuff.id
+                        obj_dict[key] = stuff
+                except:
+                    continue
+        else:
+            output = self.__session.query(models.classes[cls]).all()
+            for stuff in output:
+                key = stuff.__class__.__name__ + '.' + stuff.id
+                obj_dict[key] = stuff
         return obj_dict
+
 
     def new(self, obj):
         '''
