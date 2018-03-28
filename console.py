@@ -89,7 +89,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 1:
             print("** instance id missing **")
             return
-        obj_dict = models.storage.all()
+        obj_dict = models.storage.all(args[0])
         try:
             eval(args[0])
         except NameError:
