@@ -73,7 +73,7 @@ class HBNBCommand(cmd.Cmd):
 
             new_instance.save()
             print(new_instance.id)
-        except Exception as e:
+        except NameError:
             print("** class doesn't exist **")
 
     def do_show(self, args):
@@ -94,7 +94,6 @@ class HBNBCommand(cmd.Cmd):
         except NameError:
             print("** class doesn't exist **")
             return
-        key = args[0] + "." + args[1]
         key = args[0] + "." + args[1]
         try:
             value = obj_dict[key]
