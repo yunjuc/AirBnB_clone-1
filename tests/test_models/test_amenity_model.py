@@ -3,12 +3,13 @@
 '''
     All the test for the amenity model are implemented here.
 '''
-
 import unittest
 from models.base_model import BaseModel
 from models.amenity import Amenity
+import os
 
 
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only for FileStorage')
 class TestAmenity(unittest.TestCase):
     '''
         Testing Amenity class

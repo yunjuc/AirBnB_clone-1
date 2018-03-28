@@ -3,15 +3,16 @@
 '''
     All the test for the user model are implemented here.
 '''
-
 import unittest
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.user import User
 from io import StringIO
 import sys
 import datetime
+import os
 
 
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only for FileStorage')
 class TestUser(unittest.TestCase):
     '''
         Testing User class
@@ -22,7 +23,7 @@ class TestUser(unittest.TestCase):
             tests that the User class Inherits from BaseModel
         '''
         new_user = User()
-        self.assertIsInstance(new_user, BaseModel)
+        self.assertIsInstance(new_user, BaseModel, Base)
 
     def test_User_attributes(self):
         '''

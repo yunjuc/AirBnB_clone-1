@@ -3,14 +3,15 @@
 '''
     All the test for the base_model are implemented here.
 '''
-
 import unittest
 from models.base_model import BaseModel
 from io import StringIO
 import sys
 import datetime
+import os
 
 
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only for FileStorage')
 class TestBase(unittest.TestCase):
     '''
         Testing the base class model.
