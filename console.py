@@ -74,8 +74,7 @@ class HBNBCommand(cmd.Cmd):
             new_instance.save()
             print(new_instance.id)
         except Exception as e:
-            print(e)
-#            print("** class doesn't exist **")
+            print("** class doesn't exist **")
 
     def do_show(self, args):
         '''
@@ -89,7 +88,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 1:
             print("** instance id missing **")
             return
-        obj_dict = models.storage.all(args[0])
+        obj_dict = models.storage.all()
         try:
             eval(args[0])
         except NameError:

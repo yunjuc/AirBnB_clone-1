@@ -5,8 +5,10 @@
 import unittest
 from models.base_model import BaseModel
 from models.state import State
+import os
 
 
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only for FileStorage')
 class TestState(unittest.TestCase):
     '''
         Test the State class.

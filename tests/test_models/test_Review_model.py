@@ -3,12 +3,13 @@
 '''
     All the test for the user model are implemented here.
 '''
-
 import unittest
 from models.base_model import BaseModel
 from models.review import Review
+import os
 
 
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only for FileStorage')
 class TestReview(unittest.TestCase):
     '''
         Testing Review class
