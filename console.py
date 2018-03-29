@@ -60,8 +60,17 @@ class HBNBCommand(cmd.Cmd):
                     value = int(value)
                     new_dict[args_list[i][0]] = value
                 elif "." in value:
-                    value = float(value)
-                    new_dict[args_list[i][0]] = value
+                    x = 0
+                    for j in value:
+                        if j.isdigit() is False:
+                            break
+                        if j is '.':
+                            continue
+                        else:
+                            x += 1
+                    if x > 0:
+                        value = float(value)
+                        new_dict[args_list[i][0]] = value
                 elif value.startswith('"') and value.endswith('"'):
                     new_dict[args_list[i][0]] = value[1:-1]
                 else:
