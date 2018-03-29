@@ -8,9 +8,7 @@ import models
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
-
 Base = declarative_base()
-
 
 class BaseModel:
     '''
@@ -26,8 +24,8 @@ class BaseModel:
         '''
         if (len(kwargs) == 0):
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.utcnow()
-            self.updated_at = datetime.utcnow()
+            self.created_at = datetime.datetime.utcnow()
+            self.updated_at = datetime.datetime.utcnow()
         else:
             try:
                 kwargs["created_at"] = datetime.datetime\
