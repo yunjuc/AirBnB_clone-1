@@ -20,7 +20,7 @@ class FileStorage:
         if cls is not None:
             cls_dict = []
             for key, obj in self.__objects.items():
-                if str(obj.__class.__name__) == cls:
+                if obj.__class.__name__ == cls or obj.__class.__ == cls:
                     cls_dict[key] = obj
             return cls_dict
         else:
