@@ -45,28 +45,28 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("** class name missing **")
             return
-        args = shlex.split(args, posix=False)
-        class_name = args[0]
-
-        for i in range(1, len(args)):
-            args_list.append(args[i].split("="))
-
-        for i in range(len(args_list)):
-            value = args_list[i][1]
-            value = value.replace("_", " ")
-            value = value.replace('"', '\"')
-            if value.isdigit():
-                value = int(value)
-                new_dict[args_list[i][0]] = value
-            elif "." in value:
-                value = float(value)
-                new_dict[args_list[i][0]] = value
-            elif value.startswith('"') and value.endswith('"'):
-                new_dict[args_list[i][0]] = value[1:-1]
-            else:
-                pass
-
         try:
+            args = shlex.split(args, posix=False)
+            class_name = args[0]
+
+            for i in range(1, len(args)):
+                args_list.append(args[i].split("="))
+
+            for i in range(len(args_list)):
+                value = args_list[i][1]
+                value = value.replace("_", " ")
+                value = value.replace('"', '\"')
+                if value.isdigit():
+                    value = int(value)
+                    new_dict[args_list[i][0]] = value
+                elif "." in value:
+                    value = float(value)
+                    new_dict[args_list[i][0]] = value
+                elif value.startswith('"') and value.endswith('"'):
+                    new_dict[args_list[i][0]] = value[1:-1]
+                else:
+                    pass
+
             new_instance = eval(class_name)()
             for key, val in new_dict.items():
                 setattr(new_instance, key, val)
