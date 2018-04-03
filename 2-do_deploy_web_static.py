@@ -35,7 +35,7 @@ def do_deploy(archive_path):
             format(filename, filename))
         run('sudo rm /tmp/{}.tgz'.format(filename))
         run('sudo rm /data/web_static/current')
-        run('sudo ln -sf /data/web_static/releases/{} /data/web_static/current'
+        run('sudo ln -sf /data/web_static/releases/{}/web_static /data/web_static/current'
             .format(filename))
         return True
     except:
