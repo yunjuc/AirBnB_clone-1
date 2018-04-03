@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 '''Fabric script to pack web_static contents and upload to remote server'''
 from fabric.api import *
 from datetime import datetime
