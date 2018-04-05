@@ -45,9 +45,8 @@ def do_deploy(archive_path):
 
 def deploy():
     '''Deploy file to server'''
-    try:
-        path = do_pack()
-        result = do_deploy(path)
-        return result
-    except:
+    path = do_pack()
+    if path is None:
         return False
+    result = do_deploy(path)
+    return result
