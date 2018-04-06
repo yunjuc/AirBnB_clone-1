@@ -42,6 +42,7 @@ def do_deploy(archive_path):
     except:
         return False
 
+
 def deploy():
     '''Use do_pack and do_deploy to delopy static site'''
     path = do_pack()
