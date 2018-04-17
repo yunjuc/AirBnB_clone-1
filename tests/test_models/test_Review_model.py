@@ -9,7 +9,8 @@ from models.review import Review
 import os
 
 
-@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only for FileStorage')
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                 'only for FileStorage')
 class TestReview(unittest.TestCase):
     '''
         Testing Review class

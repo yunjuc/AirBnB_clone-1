@@ -11,7 +11,8 @@ import datetime
 import os
 
 
-@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only for FileStorage')
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                 'only for FileStorage')
 class TestBase(unittest.TestCase):
     '''
         Testing the base class model.

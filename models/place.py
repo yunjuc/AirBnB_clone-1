@@ -11,10 +11,10 @@ from models.amenity import Amenity
 
 
 place_amenity = Table('place_amenity', Base.metadata,
-                       Column('place_id', String(60),
-                              ForeignKey('places.id'), nullable=False),
-                       Column('amenity_id', String(60),
-                              ForeignKey('amenities.id'), nullable=False))
+                      Column('place_id', String(60),
+                             ForeignKey('places.id'), nullable=False),
+                      Column('amenity_id', String(60),
+                             ForeignKey('amenities.id'), nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -38,7 +38,7 @@ class Place(BaseModel, Base):
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         reviews = relationship('Review', backref='place', cascade='delete')
         amenities = relationship('Amenity', secondary=place_amenity,
-                                  backref='place', viewonly=False)
+                                 backref='place', viewonly=False)
     else:
         @property
         def reviews(self):
