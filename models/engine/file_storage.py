@@ -18,9 +18,9 @@ class FileStorage:
             Return the dictionary
         '''
         if cls is not None:
-            cls_dict = []
+            cls_dict = {}
             for key, obj in self.__objects.items():
-                if obj.__class.__name__ == cls or obj.__class.__ == cls:
+                if obj.__class__.__name__ == cls or obj.__class__ == cls:
                     cls_dict[key] = obj
             return cls_dict
         else:
