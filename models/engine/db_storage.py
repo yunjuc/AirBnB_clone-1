@@ -48,19 +48,21 @@ class DBStorage:
         import models
         obj_dict = {}
         if cls is None:
-            for things in models.classes.values():
+            for cls_obj in models.classes.values():
                 try:
-                    output = self.__session.query(things).all()
-                    for stuff in output:
-                        key = stuff.__class__.__name__ + '.' + stuff.id
-                        obj_dict[key] = stuff
+                    output = self.__session.query(cls_obj).all()
+                    for obj in output:
+                        key = obj.__class__.__name__ + '.' + obj.id
+                        obj_dict[key] = obj
                 except:
                     continue
         else:
-            output = self.__session.query(models.classes[cls]).all()
-            for stuff in output:
-                key = stuff.__class__.__name__ + '.' + stuff.id
-                obj_dict[key] = stuff
+            if type(cls) == str:
+                cls = models.classes[cls]
+            output = self.__session.query(cls).all()
+            for obj in output:
+                key = obj.__class__.__name__ + '.' + obj.id
+                obj_dict[key] = obj
         return obj_dict
 
     def new(self, obj):
