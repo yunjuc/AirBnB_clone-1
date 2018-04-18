@@ -34,7 +34,8 @@ def states_list():
 @app.route('/cities_by_states')
 def cities_state():
     '''Render cities by state list'''
-    return render_template('8-cities_by_states.html', states=states, cities=cities)
+    return render_template('8-cities_by_states.html', states=states,
+                           cities=cities)
 
 
 @app.route('/states')
@@ -47,11 +48,11 @@ def filter_state(id=''):
             if id == state.id:
                 name = state.name
         return render_template('9-states.html', id=id, state=name,
-                           cities=cities)
+                               cities=cities)
     else:
         return render_template('9-states.html', id=id, states=states)
 
- 
+
 @app.teardown_appcontext
 def close_db(error):
     '''Close db session'''
