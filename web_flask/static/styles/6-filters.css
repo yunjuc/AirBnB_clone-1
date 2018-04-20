@@ -1,4 +1,5 @@
 .filters{
+    position: relative;
     background-color: white;
     height: 70px;
     width: 100%;
@@ -59,6 +60,7 @@ button:hover{
     padding-bottom: 10%;
     max-height: 300px;
     overflow: scroll;
+    z-index: 1;
 }
 .popover li h2{
     font-size: 16px;
