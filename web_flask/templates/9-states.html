@@ -14,7 +14,6 @@
 	{% elif states == '' %}
             <H1>Not found!</H1>
 	{% else %}
-            <H1>found state</H1>
 	    {% for state in states %}
 		{% if state.id == id %}
 	        <H1>State: {{ state.name }}</H1>
